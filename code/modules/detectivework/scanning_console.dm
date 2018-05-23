@@ -9,7 +9,7 @@
 	var/obj/item/scanning
 	var/datum/data/record/forensic/current
 
-	var/list/filters = list()
+	var/list/det_filters = list()
 	var/list/current_list = list()
 
 	var/list/files = list()
@@ -90,50 +90,50 @@
 	for(var/id in files)
 		var/datum/data/record/forensic/cur = files[id]
 		var/add = 1
-		if(filters["name"])
+		if(det_filters["name"])
 			add = 0
-			for(var/filter in filters["name"])
+			for(var/filter in det_filters["name"])
 				if(findtext(cur.fields["name"], filter))
 					add = 1
 					break
 
-		if(filters["area"])
+		if(det_filters["area"])
 			add = 0
-			for(var/filter in filters["area"])
+			for(var/filter in det_filters["area"])
 				if(findtext(cur.fields["area"], filter))
 					add = 1
 					break
 
-		if(filters["fprints"])
+		if(det_filters["fprints"])
 			add = 0
 			var/list/prints = cur.fields["fprints"]
 			for(var/pid in prints)
 				var/print = prints[pid]
 				if (is_complete_print(print))
-					for(var/filter in filters["fprints"])
+					for(var/filter in det_filters["fprints"])
 						if(findtext(print, filter))
 							add = 1
 							break
 
-		if(filters["fibers"])
+		if(det_filters["fibers"])
 			add = 0
 			for(var/fiber in cur.fields["fibers"])
-				for(var/filter in filters["fibers"])
+				for(var/filter in det_filters["fibers"])
 					if(findtext(fiber, filter))
 						add = 1
 						break
 
-		if(filters["blood"])
+		if(det_filters["blood"])
 			add = 0
 			for(var/DNA in cur.fields["blood"])
-				for(var/filter in filters["blood"])
+				for(var/filter in det_filters["blood"])
 					if(findtext(DNA, filter))
 						add = 1
 						break
 
-		if(filters["label"])
+		if(det_filters["label"])
 			add = 0
-			for(var/filter in filters["label"])
+			for(var/filter in det_filters["label"])
 				if(cur.fields["label"] && findtext(cur.fields["label"], filter))
 					add = 1
 					break
@@ -159,11 +159,11 @@
 		dat +="<br><hr><br>"
 		switch(screen)
 			if("database")	//Database screen
-				dat += "Search filters:<br>"
+				dat += "Search det_filters:<br>"
 				var/list/filternames = list("Object"="name", "Area"="area", "Fingerprints"="fprints", "Fibers"="fibers", "DNA"="blood", "Label"="label")
 				for(var/filter in filternames)
 					var/fname = filternames[filter]
-					dat += "<br>[filter]: <a href='?src=\ref[src];operation=filter;filter=[fname]'>[filters[fname] ? list2text(filters[fname], ",") : "All"]</a>"
+					dat += "<br>[filter]: <a href='?src=\ref[src];operation=filter;filter=[fname]'>[det_filters[fname] ? list2text(det_filters[fname], ",") : "All"]</a>"
 
 				current_list = get_filtered_set()
 				dat+= "<br><hr><br>"
@@ -215,11 +215,11 @@
 		if("logout")
 			authenticated = 0
 		if("filter")
-			var/filterstr = stripped_input(usr,"Input the search criteria. Multiple values can be input, separated by a comma.", "Filter setting") as text|null
-			if(filterstr)
-				filters[href_list["filter"]] = text2list(filterstr,",")
+			var/det_filterstr = stripped_input(usr,"Input the search criteria. Multiple values can be input, separated by a comma.", "Filter setting") as text|null
+			if(det_filterstr)
+				det_filters[href_list["filter"]] = text2list(det_filterstr,",")
 			else
-				filters[href_list["filter"]] = null
+				det_filters[href_list["filter"]] = null
 		if("screen")
 			screen = href_list["screen"]
 		if("details")

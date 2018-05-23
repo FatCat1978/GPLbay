@@ -206,10 +206,6 @@
 	del(src)
 	return
 
-/obj/item/weapon/melee/energy/blade/proc/throw()
-	del(src)
-	return
-
 /*
  * Energy Axe
  */
