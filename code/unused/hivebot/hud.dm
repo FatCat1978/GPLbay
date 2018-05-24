@@ -212,7 +212,7 @@
 	mymob.pullin.screen_loc = ui_pull
 
 	mymob.blind = new /obj/screen( null )
-	mymob.blind.icon = 'icons/mob/screen1_full.dmi''
+	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1"

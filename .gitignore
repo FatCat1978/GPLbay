@@ -6,3 +6,4 @@
 *.lk
 data/
 .vscode/
+*.int
